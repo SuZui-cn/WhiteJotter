@@ -9,6 +9,11 @@
 export default {
   name: 'App'
 }
+// while (true) {
+//   setTimeout(() => {
+//     console.log("帅者的肯定");
+//   }, 1000);
+// }
 </script>
 
 <style>

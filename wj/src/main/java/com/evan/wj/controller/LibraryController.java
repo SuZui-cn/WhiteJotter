@@ -1,12 +1,14 @@
 package com.evan.wj.controller;
 
 import com.evan.wj.pojo.Book;
+import com.evan.wj.pojo.User;
 import com.evan.wj.service.BookService;
 import com.evan.wj.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -45,20 +47,33 @@ public class LibraryController {
     }
 
     @GetMapping("/api/search")
-    public List<Book> searchResult(@RequestParam("keywords") String keywords) {
-        //关键词为空查询所有书籍
-        if ("".equals(keywords)) {
-            return bookService.list();
+    public List<Book> searchResult(@RequestParam("keywords") String keywords, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            //关键词为空查询所有书籍
+            if ("".equals(keywords)) {
+                return bookService.list();
+            } else {
+                return bookService.search(keywords);
+            }
         } else {
-            return bookService.search(keywords);
+            return null;
         }
+
+//        //关键词为空查询所有书籍
+//        if ("".equals(keywords)) {
+//            return bookService.list();
+//        } else {
+//            return bookService.search(keywords);
+//        }
     }
 
     @PostMapping("api/covers")
     public String coversUpload(MultipartFile file) throws Exception {
         String folder = "F:/code/workspace/img";
         File imageFolder = new File(folder);
-        File f = new File(imageFolder, StringUtils.getRandomString(6) + file.getOriginalFilename()
+        File f = new File(imageFolder, StringUtils
+                .getRandomString(6) + file.getOriginalFilename()
                 .substring(file.getOriginalFilename().length() - 4));
         if (!f.getParentFile().exists()) {
             f.getParentFile().mkdirs();
