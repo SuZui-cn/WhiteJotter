@@ -104,9 +104,10 @@ export default {
     searchResult () {
       var _this = this
       this.$axios
-        .get('/search?keywords=' + this.$refs.searchBar.keywords, {
+        .get('/search?keyword=' + this.$refs.searchBar.keywords, {
         }).then(resp => {
           if (resp && resp.status === 200) {
+            console.log(resp.data)
             _this.books = resp.data
           }
         })

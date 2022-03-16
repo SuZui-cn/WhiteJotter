@@ -1,0 +1,62 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evan.wj.mapper.BookMapper">
+    <select id="findAllByCategory" resultType="book" parameterType="category">
+        select * from book
+        <where>
+            <if test=" id != null">
+                cid = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllByTitleLikeOrAuthorLike" parameterType="string" resultType="book">
+        select *
+        from book
+        <where>
+            <if test="keyword != null">
+                title like concat('%', #{keyword}, '%') or author like concat('%', #{keyword}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveBook" parameterType="book">
+        insert into book(cover, title, author, date, press, abs, cid)
+            value (#{cover}, #{title}, #{author}, #{date}, #{press}, #{abs}, #{category.id})
+    </insert>
+
+    <update id="updateBook" parameterType="book">
+        update book
+        <set>
+            <if test="cover != null">
+                cover = #{cover},
+            </if>
+            <if test="title != null">
+                title = #{title}
+            </if>
+            <if test="author != null">
+                author = #{author}
+            </if>
+            <if test="date != null">
+                date = #{date}
+            </if>
+            <if test="press != null">
+                press = #{press}
+            </if>
+            <if test="abs != null">
+                abs = #{abs}
+            </if>
+            <if test=" category.id != null">
+                category.id = #{category.id}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findBookById" parameterType="int" resultType="book">
+        select *
+        from book
+        where id = #{id}
+    </select>
+</mapper>
