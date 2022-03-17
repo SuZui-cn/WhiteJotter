@@ -2,7 +2,7 @@
   <div>
     <i
       class="el-icon-circle-plus-outline"
-      @click="dialogFormVisible = true"
+      @click="open()"
     ></i>
     <el-dialog
       title="添加/修改图书"
@@ -176,7 +176,10 @@ export default {
         press: '',
         cover: '',
         abs: '',
-        category: ''
+        category: {
+          id: '',
+          name: ''
+        }
       }
     },
     onSubmit () {
@@ -199,6 +202,10 @@ export default {
     },
     uploadImg () {
       this.form.cover = this.$refs.imgUpload.url
+    },
+    open () {
+      this.dialogFormVisible = true
+      this.clear()
     }
 
   }

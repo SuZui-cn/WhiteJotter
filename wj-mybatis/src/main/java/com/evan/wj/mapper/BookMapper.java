@@ -6,6 +6,7 @@ import com.evan.wj.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,14 @@ import java.util.List;
  */
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
+
+    /**
+     * 查询所有图书
+     *
+     * @return
+     */
+    ArrayList<Book> getAllBooks();
+
 
     /**
      * 根据目录ID查询所有图书
@@ -55,4 +64,6 @@ public interface BookMapper extends BaseMapper<Book> {
      * @param book
      */
     void updateBook(Book book);
+
+
 }

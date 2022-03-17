@@ -23,7 +23,9 @@ public class LibraryController {
 
     @GetMapping("/api/books")
     public List<Book> list() throws Exception {
-        return bookService.list();
+//        System.out.println(bookService.list().get(1).getCategory());
+        return bookService.getAllBooks();
+//        return bookService.list();
     }
 
     @PostMapping("/api/books")
@@ -77,7 +79,7 @@ public class LibraryController {
 
     @PostMapping("api/covers")
     public String coversUpload(MultipartFile file) throws Exception {
-        String folder = "F:/code/workspace/img";
+        String folder = "F:/code/my_repositories/WhiteJotter/img/";
         File imageFolder = new File(folder);
         File f = new File(imageFolder, StringUtils
                 .getRandomString(6) + file.getOriginalFilename()

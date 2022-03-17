@@ -2,8 +2,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.evan.wj.mapper.BookMapper">
+
+    <resultMap id="BookMap" type="book">
+        <result property="id" column="id"/>
+        <result property="cover" column="cover"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="date" column="date"/>
+        <result property="press" column="press"/>
+        <result property="abs" column="abs"/>
+        <result property="category.id" column="cid"/>
+        <result property="category.name" column="cname"/>
+    </resultMap>
+
+    <select id="getAllBooks" resultMap="BookMap">
+        select book.*, category.name as cname
+        from book,
+             category
+        where book.cid = category.id
+    </select>
+
+
     <select id="findAllByCategory" resultType="book" parameterType="category">
-        select * from book
+        select *
+        from book
         <where>
             <if test=" id != null">
                 cid = #{id}
@@ -33,25 +55,25 @@
                 cover = #{cover},
             </if>
             <if test="title != null">
-                title = #{title}
+                title = #{title},
             </if>
             <if test="author != null">
-                author = #{author}
+                author = #{author},
             </if>
             <if test="date != null">
-                date = #{date}
+                date = #{date},
             </if>
             <if test="press != null">
-                press = #{press}
+                press = #{press},
             </if>
             <if test="abs != null">
-                abs = #{abs}
+                abs = #{abs},
             </if>
             <if test=" category.id != null">
-                category.id = #{category.id}
+                cid = #{category.id}
             </if>
         </set>
-        where id = #{id}
+        where id = #{id};
     </update>
 
     <select id="findBookById" parameterType="int" resultType="book">

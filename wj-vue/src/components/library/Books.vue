@@ -94,12 +94,12 @@ export default {
       this.$axios.get('/books').then(resp => {
         if (resp && resp.status === 200) {
           _this.books = resp.data
+          // console.log(_this.books)
         }
       })
     },
     handleCurrentChange: function (currentPage) {
       this.currentPage = currentPage
-      console.log(this.currentPage)
     },
     searchResult () {
       var _this = this
@@ -107,7 +107,6 @@ export default {
         .get('/search?keyword=' + this.$refs.searchBar.keywords, {
         }).then(resp => {
           if (resp && resp.status === 200) {
-            console.log(resp.data)
             _this.books = resp.data
           }
         })
@@ -134,6 +133,7 @@ export default {
       // alert(id)
     },
     editBook (item) {
+      console.log(item)
       this.$refs.edit.dialogFormVisible = true
       this.$refs.edit.form = {
         id: item.id,

@@ -7,6 +7,7 @@ import com.evan.wj.pojo.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,12 @@ public class BookService extends ServiceImpl<BookMapper, Book> {
     BookMapper bookMapper;
     @Autowired
     CategoryService categoryService;
+
+
+    public ArrayList<Book> getAllBooks() {
+        return bookMapper.getAllBooks();
+    }
+
 
     @Override
     public List<Book> list() {
