@@ -1,6 +1,8 @@
 package com.evan.wj.controller;
 
+import com.evan.wj.mapper.CategoryMapper;
 import com.evan.wj.pojo.Book;
+import com.evan.wj.pojo.Category;
 import com.evan.wj.pojo.User;
 import com.evan.wj.service.BookService;
 import com.evan.wj.utils.StringUtils;
@@ -21,11 +23,21 @@ public class LibraryController {
     @Autowired
     BookService bookService;
 
+    private final CategoryMapper categoryMapper;
+
+    @Autowired
+    public LibraryController(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
+    }
+
     @GetMapping("/api/books")
     public List<Book> list() throws Exception {
-//        System.out.println(bookService.list().get(1).getCategory());
         return bookService.getAllBooks();
-//        return bookService.list();
+    }
+
+    @GetMapping("/api/category")
+    public List<Category> getCategory() {
+        return categoryMapper.selectName();
     }
 
     @PostMapping("/api/books")
