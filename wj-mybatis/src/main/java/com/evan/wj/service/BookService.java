@@ -24,7 +24,7 @@ public class BookService extends ServiceImpl<BookMapper, Book> {
     public ArrayList<Book> getAllBooks() {
         return bookMapper.getAllBooks();
     }
-
+// TODO: 2022/5/24  jiojioj
 
     @Override
     public List<Book> list() {

@@ -60,7 +60,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '123',
+        password: '123456',
       },
       responseResult: [],
     }
@@ -68,7 +68,19 @@ export default {
   methods: {
     login () {
       var _this = this
-      console.log(this.$store.state)
+      if (this.loginForm.username === "" || this.loginForm.password === '') {
+        this.$message.error("用户名或密码不能为空")
+        return
+      }
+      if (this.loginForm.username.length < 2 || this.loginForm.username.length > 8) {
+        this.$message.error("用户名应该在二到八位")
+        return
+      }
+      if (this.loginForm.password.length < 3 || this.loginForm.password.length > 20) {
+        console.log(this.loginForm.password.length)
+        this.$message.error("密码应该在六到二十位")
+        return
+      }
       this.$axios
         .post('/login', {
           username: this.loginForm.username,
@@ -79,6 +91,8 @@ export default {
             _this.$store.commit('login', _this.loginForm)
             var path = this.$route.query.redirect
             this.$router.replace({ path: path === '/' || path === undefined ? '/library' : path })
+          } else {
+            this.$message.error("用户名或密码错误")
           }
         })
         .catch((failResponse) => { })
